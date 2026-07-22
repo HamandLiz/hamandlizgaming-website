@@ -60,9 +60,54 @@
             color: #DE56FD;
         }
         
-        /* Chasing Glow Effect for Hardware Cards */
+        /* Chasing Glow Effect for Hardware Cards & Live Elements */
         .chase-gradient {
             background: conic-gradient(from 0deg, #00E100 0%, transparent 25%, transparent 50%, #DE56FD 50%, transparent 75%, transparent 100%);
+        }
+
+        /* Active Live Glow Styles */
+        .is-live-glow {
+            position: relative;
+            border-radius: 1.5rem;
+            padding: 3px;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .is-live-glow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, #00E100 0%, transparent 25%, transparent 50%, #DE56FD 50%, transparent 75%, transparent 100%);
+            animation: spin 4s linear infinite;
+            z-index: 0;
+        }
+        .is-live-glow-inner {
+            position: relative;
+            background: #000000;
+            border-radius: calc(1.5rem - 3px);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Pulsing Live Badge */
+        @keyframes pulse-live {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .live-badge {
+            animation: pulse-live 2s infinite ease-in-out;
+            background: linear-gradient(135deg, #00E100, #CB00FF);
+            color: #000000;
+            font-weight: 900;
+            font-family: 'Cartoon Splash', sans-serif;
+            letter-spacing: 0.05em;
+            box-shadow: 0 0 15px rgba(0, 225, 0, 0.6);
         }
     </style>
 </head>
@@ -71,13 +116,21 @@
     <header class="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 mt-8 text-center bg-cover bg-center rounded-3xl border border-gray-900 shadow-[0_0_50px_rgba(0,0,0,0.8)]" 
             style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,1)), url('./hero-bg.png');">
         
-        <!-- Large Central Hub Logo Graphic -->
-        <img src="./logo-hub.png" alt="Ham & Liz Gaming Hub" class="w-72 sm:w-96 h-auto mx-auto mb-10 relative z-10 drop-shadow-[0_0_30px_rgba(203,0,255,0.5)]">
+        <!-- Large Central Hub Logo Graphic with Dynamic Live Wrapper -->
+        <div id="hub-logo-container" class="inline-block mb-10 relative z-10">
+            <a href="https://twitch.tv/Hamandlizgaming" target="_blank" class="block group">
+                <img src="./logo-hub.png" alt="Ham & Liz Gaming Hub" class="w-72 sm:w-96 h-auto mx-auto drop-shadow-[0_0_30px_rgba(203,0,255,0.5)] transition-transform duration-300 group-hover:scale-105">
+            </a>
+            <!-- Live Indicator Badge (Hidden by default, shown when live) -->
+            <div id="live-indicator-badge" class="hidden absolute -top-4 left-1/2 -transform -translate-x-1/2 px-4 py-1 rounded-full text-xs sm:text-sm live-badge z-20">
+                🔴 LIVE NOW
+            </div>
+        </div>
         
         <!-- Social Link Hub -->
         <div class="flex flex-wrap justify-center gap-4 mb-10 relative z-10">
-            <!-- Twitch -->
-            <a href="https://twitch.tv/Hamandlizgaming" target="_blank" class="flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl transition-all duration-300 social-glow">
+            <!-- Twitch (with live status hook) -->
+            <a id="twitch-social-btn" href="https://twitch.tv/Hamandlizgaming" target="_blank" class="relative flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl transition-all duration-300 social-glow">
                 <i class="fa-brands fa-twitch"></i>
             </a>
             <!-- Kick -->
@@ -111,23 +164,6 @@
             <a href="#sponsors" class="hover:text-hl-green transition-colors duration-300">Sponsors</a>
         </nav>
     </header>
-
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 my-12 text-center">
-        <div class="aspect-video w-full max-w-5xl mx-auto bg-black rounded-xl overflow-hidden shadow-[0_0_40px_rgba(203,0,255,0.15)] border-2 border-gray-800 flex items-center justify-center relative group transition duration-500 hover:shadow-[0_0_50px_rgba(0,225,0,0.2)] hover:border-hl-greenDark z-10 mb-6">
-            <iframe 
-                src="https://player.twitch.tv/?channel=Hamandlizgaming&parent=localhost&parent=127.0.0.1&parent=hamandlizgaming.github.io&parent=hamandliz.github.io" 
-                frameborder="0" 
-                allowfullscreen="true" 
-                scrolling="no" 
-                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-                class="w-full h-full absolute inset-0">
-            </iframe>
-        </div>
-        <!-- Direct Fallback Button in case browser blocks iframe embedding -->
-        <a href="https://twitch.tv/Hamandlizgaming" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-hl-purple text-black font-brand text-xl tracking-wider hover:bg-hl-green transition-all duration-300 shadow-[0_0_30px_rgba(203,0,255,0.4)]">
-            <i class="fa-brands fa-twitch"></i> Watch Live on Twitch
-        </a>
-    </section>
 
     <section id="about" class="bg-hl-black py-20 border-t border-gray-900 mt-12">
         <div class="max-w-6xl mx-auto px-6">
@@ -325,5 +361,61 @@
         <p class="text-gray-600 text-sm">&copy; 2026 Ham & Liz Gaming. All rights reserved.</p>
     </footer>
 
+    <!-- Script to Handle Live Status Checking & Glow Toggle -->
+    <script>
+        async function checkLiveStatus() {
+            const hubContainer = document.getElementById('hub-logo-container');
+            const liveBadge = document.getElementById('live-indicator-badge');
+            const twitchBtn = document.getElementById('twitch-social-btn');
+
+            // Quick Testing Override: You can add ?live=true to your URL to test the glow instantly!
+            const urlParams = new URLSearchParams(window.location.search);
+            const forceLive = urlParams.get('live') === 'true';
+
+            let isLive = forceLive;
+
+            if (!isLive) {
+                try {
+                    // Using DecAPI public endpoint to check if channel is live
+                    const response = await fetch('https://decapi.me/twitch/status/Hamandlizgaming');
+                    const text = await response.text();
+                    if (text.trim().toLowerCase() === 'online') {
+                        isLive = true;
+                    }
+                } catch (e) {
+                    console.log('Live status check skipped or blocked by browser protection.');
+                }
+            }
+
+            if (isLive) {
+                // Apply chasing glow to hub logo container
+                hubContainer.classList.add('is-live-glow');
+                liveBadge.classList.remove('hidden');
+
+                // Apply chasing glow / vibrant pulse to Twitch social icon
+                twitchBtn.classList.remove('social-glow');
+                twitchBtn.style.boxShadow = '0 0 25px #00E100, 0 0 40px #DE56FD';
+                twitchBtn.style.borderColor = '#00E100';
+                twitchBtn.style.color = '#00E100';
+            } else {
+                hubContainer.classList.remove('is-live-glow');
+                liveBadge.classList.add('hidden');
+            }
+        }
+
+        // Check on load
+        checkLiveStatus();
+        // Re-check every 2 minutes
+        setInterval(checkLiveStatus, 120000);
+    </script>
+
 </body>
 </html>
+```eof
+
+### What's New:
+1. **Dynamic Live Glow:** When live, both your central hub logo and your Twitch icon light up with the chasing green-and-purple animation.
+2. **Pulsing "🔴 LIVE NOW" Badge:** Sits right above your hub logo when broadcasting.
+3. **Instant Preview Mode:** You can preview the live state anytime by adding `?live=true` to your website URL in your browser!
+
+Save this into your `index.html` file and commit it to GitHub. Let me know what you think!
