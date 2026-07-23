@@ -327,43 +327,50 @@
         </div>
     </section>
 
-    <!-- Official Fourthwall Merch Section -->
+    <!-- Official Fourthwall Merch Section with Interactive Rotator -->
     <section id="merch" class="py-20 border-t border-gray-900 bg-black">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="font-brand text-5xl mb-4 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">Official Merch</h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto font-medium">Rep the stream in style! Grab your hoodies, tees, mugs, and more. <span class="text-hl-green font-bold">10% off auto-applied for Twitch subs!</span></p>
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="mb-12">
+                <h2 class="font-brand text-5xl mb-4 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">Official Merch Rotator</h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto font-medium">Browse featured items below or jump straight to the store. <span class="text-hl-green font-bold">10% off auto-applied for Twitch subs!</span></p>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-12">
-                <!-- Merch Item 1 -->
-                <div class="bg-hl-black p-6 rounded-3xl border border-gray-800 hover:border-hl-green transition duration-500 text-center group">
-                    <img src="https://placehold.co/400x400/000000/00E100?text=Zip-Up+Hoodie" alt="Gaming Zip-Up Hoodie" class="w-full h-64 object-cover rounded-2xl mb-6 border border-gray-800 group-hover:border-hl-green transition">
-                    <h3 class="font-brand text-2xl text-hl-green mb-2">Hamm3r & Liz Zip-Up</h3>
-                    <p class="text-gray-400 text-sm mb-4">Premium 80/20 cotton blend fleece. Warm, cozy, and built for late-night gaming sessions.</p>
-                    <a href="https://hamandlizgaming-shop.fourthwall.com/products/hamm3r-and-liz-gaming-zip-up" target="_blank" class="inline-block px-6 py-2 rounded-full border border-hl-green text-hl-green hover:bg-hl-green hover:text-black font-bold transition duration-300">View Product</a>
+            <!-- Featured Merch Card Rotator -->
+            <div class="bg-hl-black p-8 rounded-3xl border-2 border-gray-800 hover:border-hl-green transition duration-500 relative shadow-[0_0_30px_rgba(0,225,0,0.1)] mb-8">
+                <!-- Navigation Arrows -->
+                <button onclick="prevMerch()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/80 border border-gray-700 text-hl-green flex items-center justify-center text-xl hover:bg-hl-green hover:text-black transition z-10 shadow-lg">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button onclick="nextMerch()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/80 border border-gray-700 text-hl-green flex items-center justify-center text-xl hover:bg-hl-green hover:text-black transition z-10 shadow-lg">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <!-- Product Display Container -->
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <!-- Product Image -->
+                    <div class="w-full md:w-1/2">
+                        <img id="merch-img" src="" alt="Merch Item" class="w-full h-80 object-cover rounded-2xl border border-gray-800 shadow-md">
+                    </div>
+                    <!-- Product Info -->
+                    <div class="w-full md:w-1/2 text-left">
+                        <span id="merch-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 bg-hl-green/10 text-hl-green border border-hl-green/30">Featured Item</span>
+                        <h3 id="merch-title" class="font-brand text-3xl text-white mb-2"></h3>
+                        <p id="merch-desc" class="text-gray-400 text-base mb-6 leading-relaxed"></p>
+                        <div class="flex items-center gap-6">
+                            <a id="merch-link" href="#" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-hl-green text-black font-brand text-lg tracking-wider hover:bg-hl-purpleLight transition shadow-[0_0_20px_rgba(0,225,0,0.3)]">
+                                <i class="fa-solid fa-cart-shopping"></i> Buy on Fourthwall
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Merch Item 2 -->
-                <div class="bg-hl-black p-6 rounded-3xl border border-gray-800 hover:border-hl-purple transition duration-500 text-center group">
-                    <img src="https://placehold.co/400x400/000000/DE56FD?text=Coffee+Mug" alt="Ceramic Coffee Mug" class="w-full h-64 object-cover rounded-2xl mb-6 border border-gray-800 group-hover:border-hl-purple transition">
-                    <h3 class="font-brand text-2xl text-hl-purpleLight mb-2">Ceramic Coffee Mug</h3>
-                    <p class="text-gray-400 text-sm mb-4">Dishwasher and microwave safe. Perfect for your morning brew or late-night energy drink!</p>
-                    <a href="https://hamandlizgaming-shop.fourthwall.com/products/ceramic-ham-and-liz-coffee-mug" target="_blank" class="inline-block px-6 py-2 rounded-full border border-hl-purple text-hl-purpleLight hover:bg-hl-purple hover:text-black font-bold transition duration-300">View Product</a>
-                </div>
-
-                <!-- Merch Item 3 -->
-                <div class="bg-hl-black p-6 rounded-3xl border border-gray-800 hover:border-hl-green transition duration-500 text-center group">
-                    <img src="https://placehold.co/400x400/000000/00E100?text=Helldivers+Crop+Top" alt="Helldivers Crop Top" class="w-full h-64 object-cover rounded-2xl mb-6 border border-gray-800 group-hover:border-hl-green transition">
-                    <h3 class="font-brand text-2xl text-hl-green mb-2">Helldivers Crop Top</h3>
-                    <p class="text-gray-400 text-sm mb-4">100% combed cotton form-fitting style. Spread democracy in absolute comfort.</p>
-                    <a href="https://hamandlizgaming-shop.fourthwall.com/products/hamm3r-and-liz-helldivers-crop-top" target="_blank" class="inline-block px-6 py-2 rounded-full border border-hl-green text-hl-green hover:bg-hl-green hover:text-black font-bold transition duration-300">View Product</a>
-                </div>
+                <!-- Rotator Indicators (Dots) -->
+                <div id="merch-dots" class="flex justify-center gap-2 mt-8"></div>
             </div>
 
             <!-- Browse All Store Button -->
-            <div class="text-center">
-                <a href="https://hamandlizgaming-shop.fourthwall.com/" target="_blank" class="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-hl-green to-hl-purple text-black font-brand text-xl tracking-wider hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_rgba(203,0,255,0.4)]">
+            <div>
+                <a href="https://hamandlizgaming-shop.fourthwall.com/" target="_blank" class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-hl-green to-hl-purple text-black font-brand text-xl tracking-wider hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_rgba(203,0,255,0.4)]">
                     <i class="fa-solid fa-store"></i> Browse Entire Merch Store
                 </a>
             </div>
@@ -406,8 +413,75 @@
         <p class="text-gray-600 text-sm">&copy; 2026 Ham & Liz Gaming. All rights reserved.</p>
     </footer>
 
-    <!-- Script to Handle Live Status Checking & Glow Toggle -->
+    <!-- Scripts for Merch Rotator & Live Status Checker -->
     <script>
+        // Merch Items Data List (You can easily update titles, descriptions, image URLs, and store links here!)
+        const merchItems = [
+            {
+                title: "Hamm3r & Liz Zip-Up Hoodie",
+                desc: "Premium 80/20 cotton blend fleece. Warm, cozy, and built for late-night gaming sessions and outdoor streams.",
+                image: "https://placehold.co/500x500/000000/00E100?text=Zip-Up+Hoodie",
+                url: "https://hamandlizgaming-shop.fourthwall.com/"
+            },
+            {
+                title: "Ceramic Coffee Mug",
+                desc: "Dishwasher and microwave safe. Perfect for your morning brew or fueling up during a marathon broadcast!",
+                image: "https://placehold.co/500x500/000000/DE56FD?text=Ceramic+Coffee+Mug",
+                url: "https://hamandlizgaming-shop.fourthwall.com/"
+            },
+            {
+                title: "Helldivers Crop Top",
+                desc: "100% combed cotton form-fitting style. Spread democracy across the galaxy in absolute comfort.",
+                image: "https://placehold.co/500x500/000000/00E100?text=Helldivers+Crop+Top",
+                url: "https://hamandlizgaming-shop.fourthwall.com/"
+            }
+        ];
+
+        let currentMerchIndex = 0;
+        let merchInterval;
+
+        function renderMerch() {
+            const item = merchItems[currentMerchIndex];
+            document.getElementById('merch-img').src = item.image;
+            document.getElementById('merch-title').textContent = item.title;
+            document.getElementById('merch-desc').textContent = item.desc;
+            document.getElementById('merch-link').href = item.url;
+
+            // Update Dots
+            const dotsContainer = document.getElementById('merch-dots');
+            dotsContainer.innerHTML = '';
+            merchItems.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all ${idx === currentMerchIndex ? 'bg-hl-green w-8' : 'bg-gray-700 hover:bg-gray-500'}`;
+                dot.onclick = () => {
+                    currentMerchIndex = idx;
+                    renderMerch();
+                    resetMerchTimer();
+                };
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function nextMerch() {
+            currentMerchIndex = (currentMerchIndex + 1) % merchItems.length;
+            renderMerch();
+        }
+
+        function prevMerch() {
+            currentMerchIndex = (currentMerchIndex - 1 + merchItems.length) % merchItems.length;
+            renderMerch();
+        }
+
+        function resetMerchTimer() {
+            clearInterval(merchInterval);
+            merchInterval = setInterval(nextMerch, 5000); // Auto-rotate every 5 seconds
+        }
+
+        // Initialize Rotator
+        renderMerch();
+        resetMerchTimer();
+
+        // Live Status Checker
         async function checkLiveStatus() {
             const hubContainer = document.getElementById('hub-logo-container');
             const liveBadge = document.getElementById('live-indicator-badge');
@@ -450,8 +524,3 @@
 
 </body>
 </html>
-```eof
-
-***
-
-Your Fourthwall Merch section is fully integrated and linked up to your store! Save this file, upload it to GitHub, and your community will have immediate access to your entire merch lineup. Let me know if you need anything else!
