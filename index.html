@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,8 @@
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Load FontAwesome for Social Media Icons - Updated to 6.6.0 for the X logo -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
-    <!-- Configure Tailwind to use custom Ham & Liz colors and Cartoon Splash font -->
     <script>
         tailwind.config = {
             theme: {
@@ -43,167 +40,84 @@
             font-display: swap;
         }
 
-        body {
-            background-color: #000000;
-            color: #f8fafc;
-        }
-        
-        /* Custom glow effects for social buttons: Static Green, Hover Purple */
-        .social-glow {
-            box-shadow: 0 0 10px #00E100;
-            border-color: #00E100;
-            color: #00E100;
-        }
-        .social-glow:hover {
-            box-shadow: 0 0 20px #DE56FD;
-            border-color: #DE56FD;
-            color: #DE56FD;
-        }
-        
-        /* Chasing Glow Effect for Hardware Cards & Live Elements */
-        .chase-gradient {
-            background: conic-gradient(from 0deg, #00E100 0%, transparent 25%, transparent 50%, #DE56FD 50%, transparent 75%, transparent 100%);
-        }
+        body { background-color: #000000; color: #f8fafc; }
+        .social-glow { box-shadow: 0 0 10px #00E100; border-color: #00E100; color: #00E100; }
+        .social-glow:hover { box-shadow: 0 0 20px #DE56FD; border-color: #DE56FD; color: #DE56FD; }
+        .chase-gradient { background: conic-gradient(from 0deg, #00E100 0%, transparent 25%, transparent 50%, #DE56FD 50%, transparent 75%, transparent 100%); }
 
-        /* Active Live Glow Styles */
-        .is-live-glow {
-            position: relative;
-            border-radius: 1.5rem;
-            padding: 3px;
-            overflow: hidden;
-            display: inline-block;
-        }
+        /* Dynamic Live Styles */
+        .is-live-glow { position: relative; border-radius: 1.5rem; padding: 3px; overflow: hidden; display: inline-block; }
         .is-live-glow::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: conic-gradient(from 0deg, #00E100 0%, transparent 25%, transparent 50%, #DE56FD 50%, transparent 75%, transparent 100%);
-            animation: spin 4s linear infinite;
-            z-index: 0;
+            animation: spin 4s linear infinite; z-index: 0;
         }
-        .is-live-glow-inner {
-            position: relative;
-            background: #000000;
-            border-radius: calc(1.5rem - 3px);
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
+        .is-live-glow-inner { position: relative; background: #000000; border-radius: calc(1.5rem - 3px); z-index: 1; padding: 0.5rem; }
+        
+        @keyframes pulse-live { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
+        .live-badge { animation: pulse-live 2s infinite ease-in-out; background: linear-gradient(135deg, #00E100, #CB00FF); color: #000000; font-weight: 900; box-shadow: 0 0 15px rgba(0, 225, 0, 0.6); }
 
-        /* Pulsing Live Badge */
-        @keyframes pulse-live {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.05); }
-        }
-        .live-badge {
-            animation: pulse-live 2s infinite ease-in-out;
-            background: linear-gradient(135deg, #00E100, #CB00FF);
-            color: #000000;
-            font-weight: 900;
-            font-family: 'Cartoon Splash', sans-serif;
-            letter-spacing: 0.05em;
-            box-shadow: 0 0 15px rgba(0, 225, 0, 0.6);
-        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="antialiased font-sans">
+<body class="antialiased font-sans overflow-x-hidden">
 
-    <header class="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 mt-8 text-center bg-cover bg-center rounded-3xl border border-gray-900 shadow-[0_0_50px_rgba(0,0,0,0.8)]" 
+    <header class="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 mt-8 text-center bg-cover bg-center rounded-3xl border border-gray-900 shadow-[0_0_50px_rgba(0,0,0,0.8)]" 
             style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,1)), url('./hero-bg.png');">
         
-        <!-- Large Central Hub Logo Graphic with Dynamic Live Wrapper -->
-        <div id="hub-logo-container" class="inline-block mb-10 relative z-10">
+        <div id="hub-logo-container" class="inline-block mb-8 relative z-10">
             <a href="https://twitch.tv/Hamandlizgaming" target="_blank" class="block group">
-                <img src="./logo-hub.png" alt="Ham & Liz Gaming Hub" class="w-72 sm:w-96 h-auto mx-auto drop-shadow-[0_0_30px_rgba(203,0,255,0.5)] transition-transform duration-300 group-hover:scale-105">
+                <img src="./logo-hub.png" alt="Ham & Liz Gaming Hub" class="w-64 sm:w-80 md:w-96 h-auto mx-auto drop-shadow-[0_0_30px_rgba(203,0,255,0.5)] transition-transform duration-300 group-hover:scale-105">
             </a>
-            <!-- Live Indicator Badge (Hidden by default, shown when live) -->
-            <div id="live-indicator-badge" class="hidden absolute -top-4 left-1/2 -transform -translate-x-1/2 px-4 py-1 rounded-full text-xs sm:text-sm live-badge z-20">
+            <div id="live-indicator-badge" class="hidden absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-brand live-badge z-20 whitespace-nowrap">
                 🔴 LIVE NOW
             </div>
         </div>
         
-        <!-- Social Link Hub -->
-        <div class="flex flex-wrap justify-center gap-4 mb-10 relative z-10">
-            <!-- Twitch (with live status hook) -->
-            <a id="twitch-social-btn" href="https://twitch.tv/Hamandlizgaming" target="_blank" class="relative flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl transition-all duration-300 social-glow">
+        <div class="flex flex-wrap justify-center gap-3 mb-8 relative z-10">
+            <a id="twitch-social-btn" href="https://twitch.tv/Hamandlizgaming" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border-2 bg-black text-xl transition-all duration-300 social-glow">
                 <i class="fa-brands fa-twitch"></i>
             </a>
-            <!-- Kick -->
-            <a href="https://kick.com/Hamandlizgaming" target="_blank" class="flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl font-bold font-sans transition-all duration-300 social-glow">
-                K
-            </a>
-            <!-- YouTube -->
-            <a href="https://youtube.com/@hamandlizgaming" target="_blank" class="flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl transition-all duration-300 social-glow">
-                <i class="fa-brands fa-youtube"></i>
-            </a>
-            <!-- TikTok -->
-            <a href="https://tiktok.com/@hamandlizgaming" target="_blank" class="flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl transition-all duration-300 social-glow">
-                <i class="fa-brands fa-tiktok"></i>
-            </a>
-            <!-- X / Twitter -->
-            <a href="https://x.com/hamandlizgaming" target="_blank" class="flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl transition-all duration-300 social-glow">
-                <i class="fa-brands fa-x-twitter"></i>
-            </a>
-            <!-- Instagram -->
-            <a href="https://instagram.com/hamandlizgaming" target="_blank" class="flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black text-2xl transition-all duration-300 social-glow">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
+            <a href="https://kick.com/Hamandlizgaming" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border-2 bg-black text-xl font-bold social-glow">K</a>
+            <a href="https://youtube.com/@hamandlizgaming" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border-2 bg-black text-xl social-glow"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://tiktok.com/@hamandlizgaming" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border-2 bg-black text-xl social-glow"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://x.com/hamandlizgaming" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border-2 bg-black text-xl social-glow"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://instagram.com/hamandlizgaming" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full border-2 bg-black text-xl social-glow"><i class="fa-brands fa-instagram"></i></a>
         </div>
 
-        <!-- Navigation Bar (Underneath Logo and Socials) -->
-        <nav class="pt-6 border-t border-gray-800/80 max-w-lg mx-auto flex flex-wrap justify-center items-center gap-6 text-sm sm:text-base font-bold text-gray-300 uppercase tracking-wide relative z-10">
-            <a href="#" class="hover:text-hl-green transition-colors duration-300">Home</a>
-            <a href="#about" class="hover:text-hl-purpleLight transition-colors duration-300">About Us</a>
-            <a href="#projects" class="hover:text-hl-green transition-colors duration-300">Projects</a>
-            <a href="#hardware" class="hover:text-hl-purpleLight transition-colors duration-300">Hardware</a>
-            <a href="#merch" class="hover:text-hl-green transition-colors duration-300">Merch</a>
-            <a href="#sponsors" class="hover:text-hl-purpleLight transition-colors duration-300">Sponsors</a>
+        <nav class="pt-6 border-t border-gray-800/80 max-w-lg mx-auto flex flex-wrap justify-center items-center gap-4 text-xs sm:text-sm font-bold text-gray-300 uppercase tracking-wide">
+            <a href="#" class="hover:text-hl-green transition-colors">Home</a>
+            <a href="#about" class="hover:text-hl-purpleLight transition-colors">About</a>
+            <a href="#projects" class="hover:text-hl-green transition-colors">Projects</a>
+            <a href="#hardware" class="hover:text-hl-purpleLight transition-colors">Hardware</a>
+            <a href="#merch" class="hover:text-hl-green transition-colors">Merch</a>
+            <a href="#sponsors" class="hover:text-hl-purpleLight transition-colors">Sponsors</a>
         </nav>
     </header>
 
-    <section id="about" class="bg-hl-black py-20 border-t border-gray-900 mt-12">
+    <section id="about" class="bg-hl-black py-16 border-t border-gray-900 mt-8">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="flex flex-col lg:flex-row items-center gap-12">
-                <!-- Image Column for The Duo Photo (.jpg) -->
+            <div class="flex flex-col lg:flex-row items-center gap-8 md:gap-12">
                 <div class="w-full lg:w-1/2">
-                    <img src="./duo-photo.jpg" alt="Ham and Liz Together" class="w-full h-auto rounded-2xl shadow-[0_0_30px_rgba(203,0,255,0.15)] border border-gray-800 hover:border-hl-purple transition duration-500 object-cover aspect-square">
+                    <img src="./duo-photo.jpg" alt="Ham and Liz Together" class="w-full max-w-md mx-auto h-auto rounded-2xl border border-gray-800 object-cover aspect-square">
                 </div>
-                
-                <!-- Text Column -->
                 <div class="w-full lg:w-1/2 text-left">
-                    <h2 class="font-brand text-5xl mb-6 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">The Duo</h2>
-                    <div class="w-24 h-1 bg-gradient-to-r from-hl-green to-hl-purple mb-8 rounded-full"></div>
-                    
-                    <p class="text-lg text-gray-300 leading-relaxed mb-4">
-                        Ham and Liz are a married couple—a duo through and through. As parents to two amazing kiddos, they are parents by day, but once the kids go to bed, the gamers come out! They love diving into whatever game catches their interest at the time. From spreading democracy in Helldivers 2 and surviving blood moons in 7 Days to Die, to Palworld, American Truck Sim, Golf with Friends, Repo, Fortnite, and more—they have played just about everything.
-                    </p>
-
-                    <p class="text-lg text-gray-300 leading-relaxed mb-8">
-                        They run this massive broadcast on a custom 3-PC setup: two dedicated gaming rigs and one powerhouse streaming PC that runs the whole show. But they don't just spend time inside! They frequently take the show on the road for IRL streams, sharing their outdoor adventures with the community using their custom mobile streaming setup, the <strong>Mushbox</strong>.
-                    </p>
-
-                    <!-- Split Bios using the Color Rule and Individual Photos (.jpg) -->
+                    <h2 class="font-brand text-4xl sm:text-5xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">The Duo</h2>
+                    <p class="text-base sm:text-lg text-gray-300 mb-4">Ham and Liz are a married couple—a duo through and through. Parents by day, gamers by night.</p>
+                    <p class="text-base sm:text-lg text-gray-300 mb-8">They run this massive broadcast on a custom 3-PC setup and take the show on the road for IRL streams with the <strong>Mushbox</strong>.</p>
                     <div class="space-y-6">
-                        <!-- Ham's Bio (Green) -->
-                        <div class="border-l-4 border-hl-green pl-6 hover:bg-white/5 p-4 rounded-r-xl transition duration-300 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                            <img src="./ham-photo.jpg" alt="Ham" class="w-24 h-24 rounded-full border-2 border-hl-green object-cover shadow-[0_0_15px_rgba(0,225,0,0.2)] shrink-0">
+                        <div class="border-l-4 border-hl-green pl-4 sm:pl-6 flex flex-col sm:flex-row items-start gap-4">
+                            <img src="./ham-photo.jpg" alt="Ham" class="w-16 h-16 rounded-full border border-hl-green object-cover">
                             <div>
-                                <h3 class="font-brand text-3xl text-hl-green mb-2 tracking-wide">Ham</h3>
-                                <p class="text-gray-400 leading-relaxed">Ham is a husband, father, gamer, and IT professional. Ham has been gaming since he was a little kid, starting out on the NES and progressing through Sega, PlayStation, Xbox, and PC. Always fascinated by technology, he took an early liking to computers and electronics. With over 20 years of IT experience, he loves talking tech on stream—whether it's the stream setup, his home network, or day-to-day work. His gaming legacy is vast, with favorites ranging from Doctor Mario on the NES and Sonic on Sega to Kingdom Hearts on PlayStation and Halo on Xbox.</p>
+                                <h3 class="font-brand text-2xl text-hl-green">Ham</h3>
+                                <p class="text-sm text-gray-400">Husband, father, and IT pro. Gaming since the NES era, focused on tech and community.</p>
                             </div>
                         </div>
-
-                        <!-- Liz's Bio (Purple) -->
-                        <div class="border-l-4 border-hl-purple pl-6 hover:bg-white/5 p-4 rounded-r-xl transition duration-300 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                            <img src="./liz-photo.jpg" alt="Liz" class="w-24 h-24 rounded-full border-2 border-hl-purple object-cover shadow-[0_0_15px_rgba(203,0,255,0.2)] shrink-0">
+                        <div class="border-l-4 border-hl-purple pl-4 sm:pl-6 flex flex-col sm:flex-row items-start gap-4">
+                            <img src="./liz-photo.jpg" alt="Liz" class="w-16 h-16 rounded-full border border-hl-purple object-cover">
                             <div>
-                                <h3 class="font-brand text-3xl text-hl-purpleLight mb-2 tracking-wide">Liz</h3>
-                                <p class="text-gray-400 leading-relaxed">The creative force and the voice of reason (usually). Keeps the base organized, snipes enemies from afar, and brings the artistic flair to the channel.</p>
+                                <h3 class="font-brand text-2xl text-hl-purpleLight">Liz</h3>
+                                <p class="text-sm text-gray-400">The creative force, base organizer, and master of artistic flair.</p>
                             </div>
                         </div>
                     </div>
@@ -212,276 +126,32 @@
         </div>
     </section>
 
-    <section id="projects" class="py-20 border-t border-gray-900">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="font-brand text-5xl mb-4 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">IRL Projects & Crafting</h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto font-medium">When we aren't streaming games, we are creating offline. Check out what we are building in the workshop and the studio.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Ham's Workshop (Green) -->
-                <div class="bg-hl-black p-8 rounded-3xl border-2 border-gray-800 hover:border-hl-green transition duration-500 shadow-[0_0_30px_rgba(0,225,0,0.05)] hover:shadow-[0_0_40px_rgba(0,225,0,0.15)]">
-                    <h3 class="font-brand text-4xl text-hl-green mb-4 tracking-wide">Ham's Workshop</h3>
-                    <p class="text-gray-300 mb-8 leading-relaxed">Firing up the 3D printers and spinning up the saws. This is where custom stream props, intricate models, and physical woodworking projects come to life.</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <img src="https://placehold.co/400x300/000000/00E100?text=3D+Printing" alt="3D Printing" class="w-full h-40 object-cover rounded-xl border border-gray-800 opacity-80 hover:opacity-100 hover:border-hl-green transition duration-300">
-                        <img src="https://placehold.co/400x300/000000/00E100?text=Woodworking" alt="Woodworking" class="w-full h-40 object-cover rounded-xl border border-gray-800 opacity-80 hover:opacity-100 hover:border-hl-green transition duration-300">
-                    </div>
-                </div>
-
-                <!-- Liz's Studio (Purple) -->
-                <div class="bg-hl-black p-8 rounded-3xl border-2 border-gray-800 hover:border-hl-purple transition duration-500 shadow-[0_0_30px_rgba(203,0,255,0.05)] hover:shadow-[0_0_40px_rgba(203,0,255,0.15)]">
-                    <h3 class="font-brand text-4xl text-hl-purpleLight mb-4 tracking-wide">Liz's Studio</h3>
-                    <p class="text-gray-300 mb-8 leading-relaxed">Patience, precision, and a whole lot of sparkle. Specializing in detailed bead jewelry, custom sewing projects, and stunning Diamond Art.</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <img src="https://placehold.co/400x300/000000/DE56FD?text=Jewelry+%26+Sewing" alt="Jewelry and Sewing" class="w-full h-40 object-cover rounded-xl border border-gray-800 opacity-80 hover:opacity-100 hover:border-hl-purple transition duration-300">
-                        <img src="https://placehold.co/400x300/000000/DE56FD?text=Diamond+Art" alt="Diamond Art" class="w-full h-40 object-cover rounded-xl border border-gray-800 opacity-80 hover:opacity-100 hover:border-hl-purple transition duration-300">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="hardware" class="py-20 border-t border-gray-900 bg-black">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="font-brand text-5xl mb-4 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">The Command Center</h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto font-medium">Powering the streams from the studio to the great outdoors.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Ham's Gaming PC (Solid Green) -->
-                <div class="bg-hl-black p-8 rounded-3xl border-2 border-hl-green transition duration-500 shadow-[0_0_20px_rgba(0,225,0,0.15)] hover:shadow-[0_0_40px_rgba(0,225,0,0.3)]">
-                    <h3 class="font-brand text-3xl text-hl-green mb-4 tracking-wide">Ham's Rig</h3>
-                    <ul class="text-gray-400 space-y-2 mb-6 font-mono text-xs sm:text-sm">
-                        <li><span class="text-hl-green font-bold">Case:</span> Corsair 6500D Max Airflow</li>
-                        <li><span class="text-hl-green font-bold">CPU:</span> AMD 7800X3D</li>
-                        <li><span class="text-hl-green font-bold">GPU:</span> ASUS AMD Radeon RX 7800 XT TUF</li>
-                        <li><span class="text-hl-green font-bold">RAM:</span> G.Skill Flare X5 32GB DDR5-6000</li>
-                        <li><span class="text-hl-green font-bold">Mobo:</span> Gigabyte B650 Gaming X AX v2</li>
-                        <li><span class="text-hl-green font-bold">Cooler/Fans:</span> Corsair iCUE LINK H150i AIO 360mm & Link RGB Fans</li>
-                        <li><span class="text-hl-green font-bold">PSU:</span> Corsair RX1000 PSU</li>
-                        <li><span class="text-hl-green font-bold">Storage:</span> 2x Samsung 980 Pro M.2 1TB, 1x Seagate FireCuda 8TB SATA</li>
-                        <li><span class="text-hl-green font-bold">Peripherals:</span> Logitech G502, Corsair K55, Logitech G432</li>
-                    </ul>
-                    <p class="text-sm text-gray-500 leading-relaxed">The designated driver's powerhouse. Built for pushing max frames and leading the charge.</p>
-                </div>
-
-                <!-- Liz's Gaming PC (Solid Purple) -->
-                <div class="bg-hl-black p-8 rounded-3xl border-2 border-hl-purple transition duration-500 shadow-[0_0_20px_rgba(203,0,255,0.15)] hover:shadow-[0_0_40px_rgba(203,0,255,0.3)]">
-                    <h3 class="font-brand text-3xl text-hl-purpleLight mb-4 tracking-wide">Liz's Rig</h3>
-                    <ul class="text-gray-400 space-y-2 mb-6 font-mono text-xs sm:text-sm">
-                        <li><span class="text-hl-purpleLight font-bold">Case:</span> Corsair 6500D Max Airflow</li>
-                        <li><span class="text-hl-purpleLight font-bold">CPU:</span> AMD 7800X3D</li>
-                        <li><span class="text-hl-purpleLight font-bold">GPU:</span> ASUS AMD Radeon RX 7800 XT TUF</li>
-                        <li><span class="text-hl-purpleLight font-bold">RAM:</span> G.Skill Flare X5 32GB DDR5-6000</li>
-                        <li><span class="text-hl-purpleLight font-bold">Mobo:</span> Gigabyte B650 Gaming X AX v2</li>
-                        <li><span class="text-hl-purpleLight font-bold">Cooler/Fans:</span> Corsair iCUE LINK H150i AIO 360mm & Link RGB Fans</li>
-                        <li><span class="text-hl-purpleLight font-bold">PSU:</span> Corsair RX1000 PSU</li>
-                        <li><span class="text-hl-purpleLight font-bold">Storage:</span> 1x Samsung 980 Pro M.2 1TB, 1x Seagate FireCuda 8TB SATA</li>
-                        <li><span class="text-hl-purpleLight font-bold">Peripherals:</span> Logitech G502, Logitech G432 Headset</li>
-                    </ul>
-                    <p class="text-sm text-gray-500 leading-relaxed">The creative sniper's machine. Flawless performance for survival, building, and eliminating targets.</p>
-                </div>
-
-                <!-- Streaming PC (Chasing Green & Purple Glow) -->
-                <div class="relative rounded-3xl p-[2px] overflow-hidden group z-10">
-                    <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] chase-gradient animate-[spin_4s_linear_infinite] z-[-2]"></div>
-                    <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] chase-gradient animate-[spin_4s_linear_infinite] blur-[20px] opacity-70 group-hover:opacity-100 transition duration-500 z-[-3]"></div>
-                    
-                    <div class="bg-hl-black p-8 rounded-[calc(1.5rem-2px)] h-full w-full relative z-[-1]">
-                        <h3 class="font-brand text-3xl text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight mb-4 tracking-wide">Streaming PC</h3>
-                        <ul class="text-gray-400 space-y-2 mb-6 font-mono text-xs sm:text-sm">
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Case:</span> Fractal Design Pop XL Air</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">CPU:</span> AMD 9700X</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">GPU:</span> NVIDIA GeForce RTX 3060</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">RAM:</span> G.Skill Flare X5 32GB DDR5-6000</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Mobo:</span> Gigabyte B650 Gaming X AX v2</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Capture/Audio:</span> [Insert Capture & Audio]</li>
-                        </ul>
-                        <p class="text-sm text-gray-500 leading-relaxed">The central brain of the 3-PC setup. Handles all OBS automation, encoding, and mixing without dropping a frame.</p>
-                    </div>
-                </div>
-
-                <!-- IRL Mushbox (Chasing Green & Purple Glow) -->
-                <div class="relative rounded-3xl p-[2px] overflow-hidden group z-10">
-                    <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] chase-gradient animate-[spin_4s_linear_infinite] z-[-2]"></div>
-                    <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] chase-gradient animate-[spin_4s_linear_infinite] blur-[20px] opacity-70 group-hover:opacity-100 transition duration-500 z-[-3]"></div>
-                    
-                    <div class="bg-hl-black p-8 rounded-[calc(1.5rem-2px)] h-full w-full relative z-[-1]">
-                        <h3 class="font-brand text-3xl text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight mb-4 tracking-wide">IRL Mushbox</h3>
-                        <ul class="text-gray-400 space-y-2 mb-6 font-mono text-xs sm:text-sm">
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Encoder/SBC:</span> Radxa Rock 5A</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Modem/Net:</span> Starlink Mini, GLI-Net Modem</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Cameras:</span> Insta 360 X3 Camera, DJI Osmo Pocket 3</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Chat Phone:</span> Pixel 5a 5G</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Audio:</span> DJI Mic 3</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Power:</span> DJI Power Station 500, Baseus 30000mAh (x3), INIU 20000mAh (x2), UGREEN Nexode 20000mAh</li>
-                            <li><span class="text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purpleLight font-bold">Mounts/Tripod:</span> Ulanzi Claw R094, Claw Quick Disconnect, MT-44 Tripod/Selfie Stick</li>
-                        </ul>
-                        <p class="text-sm text-gray-500 leading-relaxed">Our custom mobile streaming backpack built by Mushr0msauce for uninterrupted outdoor adventures.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Official Fourthwall Merch Section with Interactive Rotator -->
     <section id="merch" class="py-20 border-t border-gray-900 bg-black">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <div class="mb-12">
-                <h2 class="font-brand text-5xl mb-4 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">Official Merch Rotator</h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto font-medium">Browse featured items below or jump straight to the store. <span class="text-hl-green font-bold">10% off auto-applied for Twitch subs!</span></p>
-            </div>
+            <h2 class="font-brand text-4xl sm:text-5xl mb-12 text-transparent bg-clip-text bg-gradient-to-r from-hl-green to-hl-purple">Official Merch</h2>
             
-            <!-- Featured Merch Card Rotator -->
-            <div class="bg-hl-black p-8 rounded-3xl border-2 border-gray-800 hover:border-hl-green transition duration-500 relative shadow-[0_0_30px_rgba(0,225,0,0.1)] mb-8">
-                <!-- Navigation Arrows -->
-                <button onclick="prevMerch()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/80 border border-gray-700 text-hl-green flex items-center justify-center text-xl hover:bg-hl-green hover:text-black transition z-10 shadow-lg">
+            <div class="bg-hl-black p-6 sm:p-8 rounded-3xl border border-gray-800 shadow-xl mb-8 relative">
+                <button onclick="prevMerch()" class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/80 border border-gray-700 text-hl-green flex items-center justify-center hover:bg-hl-green hover:text-black transition z-10">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <button onclick="nextMerch()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/80 border border-gray-700 text-hl-green flex items-center justify-center text-xl hover:bg-hl-green hover:text-black transition z-10 shadow-lg">
+                <button onclick="nextMerch()" class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/80 border border-gray-700 text-hl-green flex items-center justify-center hover:bg-hl-green hover:text-black transition z-10">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
 
-                <!-- Product Display Container -->
-                <div class="flex flex-col md:flex-row items-center gap-8">
-                    <!-- Product Image -->
-                    <div class="w-full md:w-1/2">
-                        <img id="merch-img" src="" alt="Merch Item" class="w-full h-80 object-cover rounded-2xl border border-gray-800 shadow-md">
-                    </div>
-                    <!-- Product Info -->
-                    <div class="w-full md:w-1/2 text-left">
-                        <span id="merch-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 bg-hl-green/10 text-hl-green border border-hl-green/30">Featured Item</span>
-                        <h3 id="merch-title" class="font-brand text-3xl text-white mb-2"></h3>
-                        <p id="merch-desc" class="text-gray-400 text-base mb-6 leading-relaxed"></p>
-                        <div class="flex items-center gap-6">
-                            <a id="merch-link" href="#" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-hl-green text-black font-brand text-lg tracking-wider hover:bg-hl-purpleLight transition shadow-[0_0_20px_rgba(0,225,0,0.3)]">
-                                <i class="fa-solid fa-cart-shopping"></i> Buy on Fourthwall
-                            </a>
-                        </div>
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <img id="merch-img" src="" alt="Merch" class="w-64 h-64 md:w-80 md:h-80 object-cover rounded-2xl border border-gray-800">
+                    <div class="text-left">
+                        <h3 id="merch-title" class="font-brand text-2xl text-white mb-2"></h3>
+                        <p id="merch-desc" class="text-gray-400 text-sm mb-6"></p>
+                        <a id="merch-link" href="#" target="_blank" class="px-6 py-3 rounded-full bg-hl-green text-black font-bold hover:bg-white transition">Shop Item</a>
                     </div>
                 </div>
-
-                <!-- Rotator Indicators (Dots) -->
-                <div id="merch-dots" class="flex justify-center gap-2 mt-8"></div>
-            </div>
-
-            <!-- Browse All Store Button -->
-            <div>
-                <a href="https://hamandlizgaming-shop.fourthwall.com/" target="_blank" class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-hl-green to-hl-purple text-black font-brand text-xl tracking-wider hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_rgba(203,0,255,0.4)]">
-                    <i class="fa-solid fa-store"></i> Browse Entire Merch Store
-                </a>
             </div>
         </div>
     </section>
 
-    <section id="sponsors" class="py-20 border-t border-gray-900">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="font-brand text-5xl mb-6 tracking-wider text-hl-purpleLight">Supported By</h2>
-            <div class="w-24 h-1 bg-hl-green mx-auto mb-12 rounded-full"></div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 items-center">
-                <!-- SMACKIN' Seeds -->
-                <a href="https://www.smackinsunflowerseeds.com/hamandliz" target="_blank" class="block bg-hl-black p-8 rounded-xl border border-gray-800 hover:border-hl-green hover:shadow-[0_0_20px_rgba(0,225,0,0.2)] transition duration-300 group">
-                    <img src="./smackin-logo.png" alt="SMACKIN' Seeds" class="w-full h-auto opacity-70 group-hover:opacity-100 transition-opacity">
-                </a>
-                <!-- Powered By Mushbox -->
-                <a href="https://themushbox.com" target="_blank" class="block bg-hl-black p-8 rounded-xl border border-gray-800 hover:border-hl-purple hover:shadow-[0_0_20px_rgba(203,0,255,0.2)] transition duration-300 group flex items-center justify-center">
-                    <img src="./mushbox-logo.png" alt="Powered By Mushbox" class="w-full h-auto opacity-70 group-hover:opacity-100 transition-opacity">
-                </a>
-                <!-- Golden Day Coffee -->
-                <a href="https://www.goldendaycoffee.com/#/" target="_blank" class="block bg-hl-black p-6 rounded-xl border border-gray-800 hover:border-hl-green hover:shadow-[0_0_20px_rgba(0,225,0,0.2)] transition duration-300 group text-center">
-                    <img src="./goldenday-logo.png" alt="Golden Day Coffee" class="w-full h-auto opacity-80 group-hover:opacity-100 transition-opacity mb-3">
-                    <span class="text-xs sm:text-sm font-mono text-hl-green font-bold tracking-wider">Use Code: HAMANDLIZ</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="p-8 bg-black text-center border-t border-gray-900">
-        <!-- Footer Social Links -->
-        <div class="flex justify-center gap-6 mb-6">
-            <a href="https://twitch.tv/Hamandlizgaming" target="_blank" class="social-glow w-10 h-10 rounded-full border flex items-center justify-center text-lg transition-all duration-300"><i class="fa-brands fa-twitch"></i></a>
-            <a href="https://kick.com/Hamandlizgaming" target="_blank" class="social-glow w-10 h-10 rounded-full border flex items-center justify-center text-lg font-bold font-sans transition-all duration-300">K</a>
-            <a href="https://youtube.com/@hamandlizgaming" target="_blank" class="social-glow w-10 h-10 rounded-full border flex items-center justify-center text-lg transition-all duration-300"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://tiktok.com/@hamandlizgaming" target="_blank" class="social-glow w-10 h-10 rounded-full border flex items-center justify-center text-lg transition-all duration-300"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://x.com/hamandlizgaming" target="_blank" class="social-glow w-10 h-10 rounded-full border flex items-center justify-center text-lg transition-all duration-300"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="https://instagram.com/hamandlizgaming" target="_blank" class="social-glow w-10 h-10 rounded-full border flex items-center justify-center text-lg transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
-        </div>
-        <p class="text-gray-600 text-sm">&copy; 2026 Ham & Liz Gaming. All rights reserved.</p>
-    </footer>
-
-    <!-- Scripts for Merch Rotator & Live Status Checker -->
+    <!-- Script to Handle Live Status & Merch -->
     <script>
-        // Merch Items Data List (You can easily update titles, descriptions, image URLs, and store links here!)
-        const merchItems = [
-            {
-                title: "Hamm3r & Liz Zip-Up Hoodie",
-                desc: "Premium 80/20 cotton blend fleece. Warm, cozy, and built for late-night gaming sessions and outdoor streams.",
-                image: "https://placehold.co/500x500/000000/00E100?text=Zip-Up+Hoodie",
-                url: "https://hamandlizgaming-shop.fourthwall.com/"
-            },
-            {
-                title: "Ceramic Coffee Mug",
-                desc: "Dishwasher and microwave safe. Perfect for your morning brew or fueling up during a marathon broadcast!",
-                image: "https://placehold.co/500x500/000000/DE56FD?text=Ceramic+Coffee+Mug",
-                url: "https://hamandlizgaming-shop.fourthwall.com/"
-            },
-            {
-                title: "Helldivers Crop Top",
-                desc: "100% combed cotton form-fitting style. Spread democracy across the galaxy in absolute comfort.",
-                image: "https://placehold.co/500x500/000000/00E100?text=Helldivers+Crop+Top",
-                url: "https://hamandlizgaming-shop.fourthwall.com/"
-            }
-        ];
-
-        let currentMerchIndex = 0;
-        let merchInterval;
-
-        function renderMerch() {
-            const item = merchItems[currentMerchIndex];
-            document.getElementById('merch-img').src = item.image;
-            document.getElementById('merch-title').textContent = item.title;
-            document.getElementById('merch-desc').textContent = item.desc;
-            document.getElementById('merch-link').href = item.url;
-
-            // Update Dots
-            const dotsContainer = document.getElementById('merch-dots');
-            dotsContainer.innerHTML = '';
-            merchItems.forEach((_, idx) => {
-                const dot = document.createElement('button');
-                dot.className = `w-3 h-3 rounded-full transition-all ${idx === currentMerchIndex ? 'bg-hl-green w-8' : 'bg-gray-700 hover:bg-gray-500'}`;
-                dot.onclick = () => {
-                    currentMerchIndex = idx;
-                    renderMerch();
-                    resetMerchTimer();
-                };
-                dotsContainer.appendChild(dot);
-            });
-        }
-
-        function nextMerch() {
-            currentMerchIndex = (currentMerchIndex + 1) % merchItems.length;
-            renderMerch();
-        }
-
-        function prevMerch() {
-            currentMerchIndex = (currentMerchIndex - 1 + merchItems.length) % merchItems.length;
-            renderMerch();
-        }
-
-        function resetMerchTimer() {
-            clearInterval(merchInterval);
-            merchInterval = setInterval(nextMerch, 5000); // Auto-rotate every 5 seconds
-        }
-
-        // Initialize Rotator
-        renderMerch();
-        resetMerchTimer();
-
-        // Live Status Checker
         async function checkLiveStatus() {
             const hubContainer = document.getElementById('hub-logo-container');
             const liveBadge = document.getElementById('live-indicator-badge');
@@ -491,36 +161,53 @@
             const forceLive = urlParams.get('live') === 'true';
 
             let isLive = forceLive;
-
+            
+            // Add timestamp to bypass caching (Critical fix!)
+            const timestamp = Date.now();
+            
             if (!isLive) {
                 try {
-                    const response = await fetch('https://decapi.me/twitch/status/Hamandlizgaming');
+                    const response = await fetch(`https://decapi.me/twitch/status/Hamandlizgaming?t=${timestamp}`);
                     const text = await response.text();
+                    console.log("Live status check:", text); // Check your browser console (F12)
                     if (text.trim().toLowerCase() === 'online') {
                         isLive = true;
                     }
                 } catch (e) {
-                    console.log('Live status check skipped or blocked by browser protection.');
+                    console.error('Live status check failed:', e);
                 }
             }
 
             if (isLive) {
                 hubContainer.classList.add('is-live-glow');
                 liveBadge.classList.remove('hidden');
-
                 twitchBtn.classList.remove('social-glow');
                 twitchBtn.style.boxShadow = '0 0 25px #00E100, 0 0 40px #DE56FD';
-                twitchBtn.style.borderColor = '#00E100';
-                twitchBtn.style.color = '#00E100';
             } else {
                 hubContainer.classList.remove('is-live-glow');
                 liveBadge.classList.add('hidden');
+                twitchBtn.classList.add('social-glow');
+                twitchBtn.style.boxShadow = '';
             }
         }
 
         checkLiveStatus();
-        setInterval(checkLiveStatus, 120000);
-    </script>
+        setInterval(checkLiveStatus, 60000); // Check every 60 seconds
 
+        // Merch Rotator
+        const merchItems = [
+            { title: "Hamm3r & Liz Zip-Up", desc: "Premium cotton blend fleece.", image: "https://placehold.co/500x500/000000/00E100?text=Zip-Up+Hoodie", url: "#" },
+            { title: "Ceramic Mug", desc: "Perfect for marathon streams.", image: "https://placehold.co/500x500/000000/DE56FD?text=Mug", url: "#" }
+        ];
+        let idx = 0;
+        function render() {
+            document.getElementById('merch-img').src = merchItems[idx].image;
+            document.getElementById('merch-title').textContent = merchItems[idx].title;
+            document.getElementById('merch-desc').textContent = merchItems[idx].desc;
+        }
+        function nextMerch() { idx = (idx + 1) % merchItems.length; render(); }
+        function prevMerch() { idx = (idx - 1 + merchItems.length) % merchItems.length; render(); }
+        render();
+    </script>
 </body>
 </html>
